@@ -19,6 +19,8 @@ exports.screenshot = async (req, res) => {
         page = await getBrowserPage();
     }
 
+    const override = Object.assign(page.viewport(), {width: 1000});
+    await page.setViewport(override);
     await page.goto(url);
     const imageBuffer = await page.screenshot();
     res.set('Content-Type', 'image/png');

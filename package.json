@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gcloud beta functions deploy screenshot --trigger-http --runtime nodejs8 --memory 1024MB --project alibaba-baidu --region asia-northeast1"
   },
   "author": "",
   "license": "ISC",
