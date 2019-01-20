@@ -8,6 +8,8 @@ async function getBrowserPage() {
 }
 
 exports.screenshot = async (req, res) => {
+    res.set('Access-Control-Allow-Origin', "*");
+    res.set('Access-Control-Allow-Methods', 'GET, POST');
     const url = req.query.url;
 
     if (!url) {
@@ -19,10 +21,13 @@ exports.screenshot = async (req, res) => {
         page = await getBrowserPage();
     }
 
+    let start = new Date();
+
     const override = Object.assign(page.viewport(), {width: 1000});
     await page.setViewport(override);
+
     await page.goto(url);
     const imageBuffer = await page.screenshot();
-    res.set('Content-Type', 'image/png');
-    res.send(imageBuffer);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({time: new Date() - start, image: imageBuffer}));
 };
